@@ -9,8 +9,8 @@ var TEXT_X = CLOUD_X + CLOUD_PADDING;
 var TEXT_Y = CLOUD_Y + CLOUD_PADDING;
 var TEXT_LINE_HEIGHT = 1.5;
 var TEXT_FONT = '16px PT Mono';
-var TEXT_HEIGHT = 16; //Должно быть равно размеру шрифта из TEXT_FONT, используется для расчета отрисовки столбца, не знаю, как обойтись
-var G_BODY_HEIGHT = 150; //высота гистограммы
+var TEXT_HEIGHT = 16;
+var G_BODY_HEIGHT = 150;
 var BAR_WIDTH = 40;
 var BAR_MARGIN = 50;
 var getMaxElement = function(arr) {
@@ -29,14 +29,14 @@ var renderCloud = function (ctx, x, y, color) {
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 window.renderStatistics = function (ctx, names, times){
-  //рисуем облако, делаем надписи сверху
+  var winnerPoints = Math.round(getMaxElement(times));
+
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
   ctx.fillStyle = '#000';
   ctx.font = TEXT_FONT;
   ctx.fillText('Ура вы победили!', TEXT_X, TEXT_Y);
   ctx.fillText('Список результатов:',  TEXT_X, TEXT_Y * TEXT_LINE_HEIGHT);
-  var winnerPoints = Math.round(getMaxElement(times));
   for (var i = 0; i < names.length; i++) {
     var xBarCoordinate = CLOUD_X + CLOUD_PADDING + (BAR_WIDTH + BAR_MARGIN) * i;
     ctx.font = TEXT_FONT;
