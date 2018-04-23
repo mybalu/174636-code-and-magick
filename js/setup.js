@@ -64,4 +64,3 @@ var similarListElement = document.querySelector('.setup-similar-list');
 similarListElement.appendChild(fragmentForAllWizards);
 //  И нужно же сделать блок видимым, чтобы было видно, что мы рисовали)
 document.querySelector('.setup-similar').classList.remove('hidden');
-
