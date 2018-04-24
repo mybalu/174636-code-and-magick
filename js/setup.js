@@ -60,7 +60,7 @@ var giveResultFragment = function (wizzardArray) {
     fragmentForAllWizards.appendChild(wizardElement);
   }
   return fragmentForAllWizards;
-}
+};
 
 // И теперь вставляем наш фрагмент в итоговую разметку
 // Сначала Находим блок, куда вставлять волшебников
