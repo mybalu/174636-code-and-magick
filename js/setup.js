@@ -22,6 +22,10 @@ var wizardsData = {
   getEyesColor: function () {
     var randomEyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
     return randomEyesColors[giveMeRandom(0, 4)];
+  },
+  getFireballColor: function () {
+    var randomFireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+    return randomFireballColors[giveMeRandom(0, 4)];
   }
 };
 var giveRandomWizard = function () {
@@ -81,6 +85,8 @@ var closePopup = function () {
   setup.classList.add('hidden');
   // И раз окно закрыто, то слушать событие, которое его должно закрывать - не нужно
   document.removeEventListener('keydown', onPopupEscPress);
+  wizardEyes.removeEventListener('click', changeEyesColor);
+  fireballColor.removeEventListener('click', changeFireballColor);
 };
 var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE && document.activeElement !== userNameInput) {
@@ -104,3 +110,24 @@ setupClose.addEventListener('keydown', function (evt) {
     closePopup();
   }
 });
+// Меняем цвет глаз персонажа по клику на них
+var eyesColorInput = document.querySelector('input[name=eyes-color]');
+var changeEyesColor = function () {
+  var eyesColorNow = wizardsData.getEyesColor();
+  wizardEyes.setAttribute('fill', eyesColorNow);
+  eyesColorInput.value = eyesColorNow;
+};
+var wizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
+
+wizardEyes.addEventListener('click', changeEyesColor);
+
+// Меняем цвет фаерболов по клику на них
+var fireballColor = document.querySelector('.setup-fireball-wrap');
+var fireballColorInput = document.querySelector('input[name=fireball-color]');
+var changeFireballColor = function () {
+  var fireballColorNow = wizardsData.getFireballColor();
+  fireballColor.style.background = fireballColorNow;
+  fireballColorInput.value = fireballColorNow;
+};
+
+fireballColor.addEventListener('click', changeFireballColor);
