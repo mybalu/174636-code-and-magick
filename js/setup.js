@@ -70,7 +70,7 @@ document.querySelector('.setup-similar').classList.remove('hidden');
 var setup = document.querySelector('.setup');// Окно с настройками персонажа
 var setupOpen = document.querySelector('.setup-open');// аватар пользователя в верхнем правом углу
 var setupClose = setup.querySelector('.setup-close');// кнопка закрытия модального окна с настройками
-// var userNameInput = setup.querySelector('.setup-user-name');// input с именем персонажа
+var userNameInput = setup.querySelector('.setup-user-name');// input с именем персонажа
 // Две функции ниже открывают и закрывают модалку с настройками персонажа
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -83,7 +83,7 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && document.activeElement !== userNameInput) {
     closePopup();
   }
 };
@@ -104,17 +104,3 @@ setupClose.addEventListener('keydown', function (evt) {
     closePopup();
   }
 });
-
-// Это пока рано)
-// // Будет ловить ошибки при заполнении поля username формы персонажа
-// userNameInput.addEventListener('invalid', function (evt) {
-//   if (userNameInput.validity.tooShort) {
-//     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
-//   } else if (userNameInput.validity.tooLong) {
-//     userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
-//   } else if (userNameInput.validity.valueMissing) {
-//     userNameInput.setCustomValidity('Обязательное поле');
-//   } else {
-//     userNameInput.setCustomValidity('');
-//   }
-// });
