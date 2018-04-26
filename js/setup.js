@@ -1,4 +1,6 @@
 'use strict';
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 var WIZARDS_COUNT = 4;// Сколько у нас всего волшебников
 var giveMeRandom = function (min, max) {
   max++;
@@ -68,32 +70,38 @@ document.querySelector('.setup-similar').classList.remove('hidden');
 var setup = document.querySelector('.setup');// Окно с настройками персонажа
 var setupOpen = document.querySelector('.setup-open');// аватар пользователя в верхнем правом углу
 var setupClose = setup.querySelector('.setup-close');// кнопка закрытия модального окна с настройками
-var userNameInput = setup.querySelector('.setup-user-name');// input с именем персонажа
+// var userNameInput = setup.querySelector('.setup-user-name');// input с именем персонажа
+// Две функции ниже открывают и закрывают модалку с настройками персонажа
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  // Если окно открыли, его нужно будет когда-то закрывать. Добавим обработчик, чтобы можно было закрыть его с клавиатуры
+  document.addEventListener('keydown', onPopupEscPress);
+};
+var closePopup = function () {
+  setup.classList.add('hidden');
+  // И раз окно закрыто, то слушать событие, которое его должно закрывать - не нужно
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
 
 // Обработчики по клику на аватар
-setupOpen.addEventListener('click', function () {
-  setup.classList.remove('hidden');
-  // Если окно открыли, его нужно будет как-то закрывать. Добавим обработчик, чтобы можно было закрыть его клавиатурой
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      setup.classList.add('hidden');
-    }
-  });
-});
-// Обработчик, чтобы модалка открывалась с клавиатуры по Enter, если в фокусе
+setupOpen.addEventListener('click', openPopup);
+// Обработчик, чтобы модалка открывалась с клавиатуры по Enter, если в фокусе крестик
 setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    setup.classList.remove('hidden');
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
   }
 });
-// По клику на крестик закрытия модалки настроек персонажа, закрывается окно настроек персонажа
-setupClose.addEventListener('click', function () {
-  setup.classList.add('hidden');
-});
+// По клику на крестик закрытия модалки, закрывается окно настроек персонажа
+setupClose.addEventListener('click', closePopup);
 // Обработчик, чтобы модалка закрывалась с клавиатуры по Enter, если в фокусе крестик
 setupClose.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === 13) {
-    setup.classList.add('hidden');
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
   }
 });
 
