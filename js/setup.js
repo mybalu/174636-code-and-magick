@@ -1,9 +1,5 @@
 'use strict';
 var WIZARDS_COUNT = 4;// Сколько у нас всего волшебников
-var userDialog = document.querySelector('.setup');
-
-userDialog.classList.remove('hidden');
-
 var giveMeRandom = function (min, max) {
   max++;
   return Math.floor(Math.random() * (max - min) + min);
@@ -61,7 +57,6 @@ var giveResultFragment = function (wizzardArray) {
   }
   return fragmentForAllWizards;
 };
-
 // И теперь вставляем наш фрагмент в итоговую разметку
 // Сначала Находим блок, куда вставлять волшебников
 var similarListElement = document.querySelector('.setup-similar-list');
@@ -69,3 +64,49 @@ var similarListElement = document.querySelector('.setup-similar-list');
 similarListElement.appendChild(giveResultFragment(allWizards));
 //  И нужно же сделать блок видимым, чтобы было видно, что мы рисовали)
 document.querySelector('.setup-similar').classList.remove('hidden');
+
+var setup = document.querySelector('.setup');// Окно с настройками персонажа
+var setupOpen = document.querySelector('.setup-open');// аватар пользователя в верхнем правом углу
+var setupClose = setup.querySelector('.setup-close');// кнопка закрытия модального окна с настройками
+var userNameInput = setup.querySelector('.setup-user-name');// input с именем персонажа
+
+// Обработчики по клику на аватар
+setupOpen.addEventListener('click', function () {
+  setup.classList.remove('hidden');
+  // Если окно открыли, его нужно будет как-то закрывать. Добавим обработчик, чтобы можно было закрыть его клавиатурой
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      setup.classList.add('hidden');
+    }
+  });
+});
+// Обработчик, чтобы модалка открывалась с клавиатуры по Enter, если в фокусе
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    setup.classList.remove('hidden');
+  }
+});
+// По клику на крестик закрытия модалки настроек персонажа, закрывается окно настроек персонажа
+setupClose.addEventListener('click', function () {
+  setup.classList.add('hidden');
+});
+// Обработчик, чтобы модалка закрывалась с клавиатуры по Enter, если в фокусе крестик
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    setup.classList.add('hidden');
+  }
+});
+
+// Это пока рано)
+// // Будет ловить ошибки при заполнении поля username формы персонажа
+// userNameInput.addEventListener('invalid', function (evt) {
+//   if (userNameInput.validity.tooShort) {
+//     userNameInput.setCustomValidity('Имя должно состоять минимум из 2-х символов');
+//   } else if (userNameInput.validity.tooLong) {
+//     userNameInput.setCustomValidity('Имя не должно превышать 25-ти символов');
+//   } else if (userNameInput.validity.valueMissing) {
+//     userNameInput.setCustomValidity('Обязательное поле');
+//   } else {
+//     userNameInput.setCustomValidity('');
+//   }
+// });
