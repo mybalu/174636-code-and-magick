@@ -80,6 +80,8 @@ var openPopup = function () {
   setup.classList.remove('hidden');
   // Если окно открыли, его нужно будет когда-то закрывать. Добавим обработчик, чтобы можно было закрыть его с клавиатуры
   document.addEventListener('keydown', onPopupEscPress);
+  wizardEyes.addEventListener('click', changeEyesColor);
+  fireballColor.addEventListener('click', changeFireballColor);
 };
 var closePopup = function () {
   setup.classList.add('hidden');
